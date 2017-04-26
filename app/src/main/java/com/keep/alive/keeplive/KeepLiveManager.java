@@ -17,6 +17,7 @@ import com.keep.alive.keeplive.account.SyncAccountUtils;
 
 public class KeepLiveManager {
     private static final long PERIODIC_TIME = 60 * 1000;
+    public static final int IGNORINGBATTERY = 9999;
 
     public static void startKeepLiveActivity() {
         Intent keepLive = new Intent(ApplicationManager.ctx, KeepLiveActivity.class);
@@ -75,20 +76,40 @@ public class KeepLiveManager {
      */
     @TargetApi(Build.VERSION_CODES.M)
     public static boolean isIgnoringBatteryOptimizations(Activity activity) {
-        String packageName = activity.getPackageName();
-        PowerManager pm = (PowerManager) activity.getSystemService(Context.POWER_SERVICE);
-        if (pm.isIgnoringBatteryOptimizations(packageName)) {
-            return true;
-        } else {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             try {
-                Intent intent = new Intent();
-                intent.setAction(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
-                intent.setData(Uri.parse("package:" + packageName));
-                activity.startActivity(intent);
+                String packageName = activity.getPackageName();
+                PowerManager pm = (PowerManager) activity.getSystemService(Context.POWER_SERVICE);
+                return pm.isIgnoringBatteryOptimizations(packageName);
             } catch (Exception e) {
                 e.printStackTrace();
+                return true;
+            }catch (NoSuchFieldError error){
+                error.printStackTrace();
+                return true;
             }
-            return false;
+        }else {
+            return true;
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    public static void openIgnoringBatteryOptimizations(Activity activity) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            try {
+                String packageName = activity.getPackageName();
+                PowerManager pm = (PowerManager) activity.getSystemService(Context.POWER_SERVICE);
+                if (!pm.isIgnoringBatteryOptimizations(packageName)) {
+                    Intent intent = new Intent();
+                    intent.setAction(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+                    intent.setData(Uri.parse("package:" + packageName));
+                    activity.startActivityForResult(intent, IGNORINGBATTERY);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }catch (NoSuchFieldError error){
+                error.printStackTrace();
+            }
         }
     }
 }

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">KeepAlive</string>
+    <string name="ignoring_battery_optimizations_tips">重要提醒不再错过，点击开启电池优化</string>
 </resources>
