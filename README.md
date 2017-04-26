@@ -14,5 +14,8 @@
 
 [ANDROID进程保活](http://tech.etouch.cn/archives/1127) 
 [安卓保活大全](http://dev.qq.com/topic/57ac4a0ea374c75371c08ce8)  
-[保活手段](http://www.jianshu.com/p/63aafe3c12af) 
+[保活手段](http://www.jianshu.com/p/63aafe3c12af)
 [Android闹钟设置的解决方案](http://www.androidchina.net/5338.html?sukey=3997c0719f151520cd198e139daaf7df88d30308a0d1715c2b047f78f16d21cbb1a6c7c41aa5cea192b55de79d5a61d6)
+
+ 
+
